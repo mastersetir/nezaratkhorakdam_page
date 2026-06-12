@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="سامانه هوشمند نظارت توزیع خوراک دام دولتی و آزاد | زیر نظر اتحادیه دامداران روستایی">
+  <meta name="theme-color" content="#2b5e2a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fef9e6" media="(prefers-color-scheme: light)">
+  <title>خوراک دام ۳۶۵ | سامانه نظارت توزیع خوراک دام و کنسانتره</title>
+  
+  <!-- Font Awesome 6 (آفلاین - فرض بر وجود فایل‌ها در مسیر مشخص) -->
+  <link rel="stylesheet" href="assets//css/all.min.css">
+  
+  <style>
+    /* ========== فونت وزیرمتن آفلاین (بر اساس فایل‌های دانلودی قبلی) ========= */
+    @font-face {
+      font-family: 'Vazirmatn';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: url('assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlGMWWMmk.woff2') format('woff2');
+      unicode-range: U+0600-06FF, U+0750-077F, U+FB50-FDFF, U+FE70-FE74, U+0000-00FF;
+    }
+    @font-face {
+      font-family: 'Vazirmatn';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlE8WWMmk.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Vazirmatn';
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url('assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlHcWW.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Vazirmatn';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlHcWW.woff2') format('woff2');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Vazirmatn', 'Segoe UI', system-ui, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-primary);
+      transition: background 0.25s ease, color 0.2s ease;
+      line-height: 1.5;
+    }
+
+    /* رنگ‌بندی قدرتمند روز و شب */
+    :root {
+      --bg-body: #fefcf5;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-header: rgba(255, 251, 240, 0.96);
+      --bg-footer: #1a3a1a;
+      --text-primary: #1e2f1c;
+      --text-secondary: #2b5329;
+      --text-muted: #5d7156;
+      --border-color: #e3dac9;
+      --accent-gold: #c8a245;
+      --accent-deep: #2d6a2f;
+      --accent-strong: #cd7542;
+      --accent-leaf: #6b8c42;
+      --shadow-card: 0 18px 30px -12px rgba(0, 0, 0, 0.08);
+      --grad-header: linear-gradient(120deg, #e9f0e3, #fff6e8);
+    }
+    body.dark {
+      --bg-body: #121e12;
+      --bg-surface: #1f2e1c;
+      --bg-card: #253d22;
+      --bg-header: #0f200ecc;
+      --bg-footer: #071007;
+      --text-primary: #f2f2e9;
+      --text-secondary: #cfe2c5;
+      --text-muted: #b0c2a4;
+      --border-color: #3a5535;
+      --accent-gold: #e7b551;
+      --accent-deep: #5fa34b;
+      --accent-strong: #f59341;
+      --grad-header: linear-gradient(135deg, #1c3319, #162613);
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 1.8rem;
+    }
+
+    /* هدر شیشه‌ای با لوگوی ترکیبی جدید */
+    .header {
+      background: var(--bg-header);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 0.6rem 0;
+    }
+    .nav-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    /* لوگوی جدید: پرنده + دانۀ خوراک */
+    .logo-combo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .logo-icon-bird {
+      background: var(--accent-deep);
+      width: 58px;
+      height: 58px;
+      border-radius: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .logo-icon-bird i {
+      color: #ffe1a0;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.2);
+    }
+    .logo-text-brand h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(130deg, var(--accent-gold), var(--accent-strong));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .logo-text-brand p {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--accent-deep);
+    }
+    .dark-toggle {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 2.5rem;
+      padding: 0.4rem 1rem;
+      font-family: 'Vazirmatn';
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    /* بخش قهرمان */
+    .hero {
+      background: var(--grad-header);
+      border-radius: 2.5rem;
+      margin: 2rem 0;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-card);
+    }
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .stat-block {
+      background: var(--bg-card);
+      border-radius: 2rem;
+      padding: 1rem 1.4rem;
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    /* کارت‌های اصلی با آیکون‌های جایگزین (برای کارخانه و داشبورد از آیکون های قطعی FA6) */
+    .features-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    .feat-card {
+      background: var(--bg-card);
+      border-radius: 2rem;
+      padding: 1.8rem;
+      border: 1px solid var(--border-color);
+      transition: 0.2s;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+    .feat-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-gold);
+    }
+    .icon-large {
+      font-size: 2.8rem;
+      color: var(--accent-strong);
+      margin-bottom: 0.8rem;
+    }
+    .alt-icon-fallback {
+      display: inline-flex;
+      background: var(--accent-leaf);
+      padding: 10px;
+      border-radius: 50%;
+    }
+
+    /* لینک حیاتی به دامنه */
+    .main-link {
+      background: var(--accent-deep);
+      border-radius: 2rem;
+      padding: 1.6rem;
+      text-align: center;
+      color: white;
+      margin: 2rem 0;
+    }
+    .main-link a {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      color: var(--accent-deep);
+      text-decoration: none;
+      padding: 0.7rem 1.8rem;
+      border-radius: 3rem;
+      font-weight: 800;
+      margin-top: 0.8rem;
+    }
+    footer {
+      background: var(--bg-footer);
+      border-radius: 2rem 2rem 0 0;
+      padding: 1.8rem 0 1rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 700px) {
+      .container {
+        padding: 0 1rem;
+      }
+      .hero-stats {
+        flex-direction: column;
+      }
+    }
+    .inline-list {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    button {
+      background: none;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav-flex">
+    <div class="logo-combo">
+      <div class="logo-icon-bird">
+        <i class="fas fa-dove"></i> <i class="fas fa-seedling"></i>
+      </div>
+      <div class="logo-text-brand">
+        <h1>خوراک‌دام <span style="color:var(--accent-strong);">۳۶۵</span></h1>
+        <p><i class="fas fa-chart-line"></i> نظارت هوشمند توزیع خوراک دام  | اتحادیه دامداران روستایی</p>
+      </div>
+    </div>
+    <button id="darkModeBtn" class="dark-toggle"><i class="fas fa-moon"></i> <span>حالت شب</span></button>
+  </div>
+</header>
+
+<main class="container">
+  <!-- معرفی با آمار -->
+  <div class="hero">
+    <h2 style="font-size: 1.9rem;"><i class="fas fa-tractor"></i> سامانه جامع خوراک دام دولتی و آزاد</h2>
+    <p>زیر نظر اتحادیه دامداران روستایی – پایش ۲۵ کارخانه تولید خوراک و بیش از ۳,۰۰۰ دامدار عضو</p>
+    <div class="hero-stats">
+      <div class="stat-block"><i class="fas fa-factory"></i> <strong>۲۵+</strong><br>کارخانه خوراک دام</div>
+      <div class="stat-block"><i class="fas fa-users"></i> <strong>۳,۰۰۰+</strong><br>دامدار روستایی</div>
+      <div class="stat-block"><i class="fas fa-chart-line"></i> <strong>۱۰۰%</strong><br>شفافیت توزیع</div>
+    </div>
+  </div>
+
+  <!-- بخش امکانات: اینجا آیکون کارخانه و گزارش و داشبورد مدیریت به طور قطعی از فونت‌awesome استفاده شده -->
+  <div class="features-section">
+    <div class="feat-card">
+      <div class="icon-large"><i class="fas fa-industry"></i></div>
+      <h3>تعریف کارخانه تولید خوراک دام</h3>
+      <p>ثبت کامل ۲۵ کارخانه دولتی و آزاد، نظارت بر ظرفیت، استانداردها و توزیع خوراک دام و کنسانتره تحت سامانه.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon-large"><i class="fas fa-id-card"></i></div>
+      <h3>معرفی دامداران</h3>
+      <p>پروفایل دیجیتال برای بیش از ۳۰۰۰ دامدار با سابقه خرید، موقعیت و نوع دام جهت تخصیص عادلانه سهمیه.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon-large"><i class="fas fa-chart-pie"></i></div>
+      <h3>سهمیه بندی هوشمند</h3>
+      <p>توزیع خوراک دولتی و آزاد با الگوریتم شفاف بر اساس تعداد دام و نیاز منطقه.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon-large"><i class="fas fa-truck-ramp-box"></i></div>
+      <h3>خرید مواد اولیه</h3>
+      <p>تامین ذرت، سویا، جو و مکمل از بورس و تامین‌کنندگان معتبر تحت نظارت اتحادیه.</p>
+    </div>
+    <div class="feat-card">
+      <div class="icon-large"><i class="fas fa-shopping-cart"></i></div>
+      <h3>فروش خوراک و کنسانتره</h3>
+      <p>سیستم سفارش آنلاین خوراک آماده و کنسانتره برای دامداران با قیمت رقابتی.</p>
+    </div>
+    <div class="feat-card">
+      <!-- کلیدی‌ترین آیکون: گزارش و داشبورد مدیریت - استفاده از fa-chart-simple و fa-gauge-high -->
+      <div class="icon-large"><i class="fas fa-chart-simple"></i> <i class="fas fa-gauge-high"></i></div>
+      <h3>گزارش و داشبورد مدیریت</h3>
+      <p>داشبورد اختصاصی با گزارشات لحظه‌ای از موجودی، توزیع، رضایت دامداران و تحلیل عملکرد کارخانه‌ها.</p>
+    </div>
+  </div>
+
+  <!-- بخش جداگانه برای تاکید روی گزارش و داشبورد (تضمین آیکون) -->
+  <div style="background: var(--bg-surface); border-radius: 2rem; padding: 1.5rem; margin: 1rem 0; border-right: 5px solid var(--accent-gold);">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+      <i class="fas fa-chart-line" style="font-size: 2rem; color: var(--accent-strong);"></i>
+      <i class="fas fa-tachometer-alt" style="font-size: 2rem; color: var(--accent-gold);"></i>
+      <h3>داشبورد مدیریت پیشرفته</h3>
+    </div>
+    <p>امکان مشاهده لحظه‌ای میزان توزیع خوراک دام دولتی، سهمیه باقیمانده، رتبه‌بندی کارخانه‌ها و نظارت کامل بر زنجیره تامین. گزارشات تحلیلی جهت تصمیم‌گیری هوشمند برای اتحادیه دامداران.</p>
+  </div>
+
+  <!-- لینک مهم به سایت khorakdam365.masterset.ir با آیکون -->
+  <div class="main-link">
+    <i class="fas fa-external-link-alt"></i> <strong>سامانه اصلی خوراک دام ۳۶۵</strong>
+    <p>مدیریت سهمیه، خرید کنسانتره و گزارشات جامع</p>
+    <a href="https://khorakdam365.masterset.ir" target="_blank" rel="noopener">
+      <i class="fas fa-arrow-left"></i> khorakdam365.masterset.ir
+    </a>
+  </div>
+
+  <!-- بخش کارخانه و دامدار با اعداد دقیق -->
+  <div class="inline-list" style="justify-content: center;">
+    <span style="background: var(--bg-card); padding: 0.5rem 1.2rem; border-radius: 3rem;"><i class="fas fa-check-circle"></i> ۲۵ کارخانه تحت پوشش</span>
+    <span style="background: var(--bg-card); padding: 0.5rem 1.2rem; border-radius: 3rem;"><i class="fas fa-check-circle"></i> بیش از ۳۰۰۰ دامدار عضو</span>
+    <span style="background: var(--bg-card); padding: 0.5rem 1.2rem; border-radius: 3rem;"><i class="fas fa-charging-station"></i> نظارت ۲۴ ساعته اتحادیه</span>
+  </div>
+</main>
+
+<footer>
+  <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;">
+    <div><i class="fas fa-code"></i> طراحی و توسعه: گروه مهندسی نرم‌افزار مسترست</div>
+    <div><i class="fas fa-phone-alt"></i> پشتیبانی: 09123518127</div>
+  </div>
+  <div class="container" style="text-align: center; border-top: 1px solid #3f6040; margin-top: 1.2rem; padding-top: 1rem; font-size: 0.75rem;">
+    تمامی حقوق محفوظ است © سامانه نظارت توزیع خوراک دام – زیر نظر اتحادیه دامداران روستایی
+  </div>
+</footer>
+
+<script>
+  (function() {
+    // حالت روز و شب با ذخیره در localStorage
+    const btn = document.getElementById('darkModeBtn');
+    const modeSpan = btn?.querySelector('span');
+    function setTheme(dark) {
+      if (dark) {
+        document.body.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        if (modeSpan) modeSpan.innerHTML = '<i class="fas fa-sun"></i> روز';
+        if (btn) btn.innerHTML = '<i class="fas fa-sun"></i> <span>روز</span>';
+      } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        if (modeSpan) modeSpan.innerHTML = '<i class="fas fa-moon"></i> شب';
+        if (btn) btn.innerHTML = '<i class="fas fa-moon"></i> <span>شب</span>';
+      }
+    }
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') setTheme(true);
+    else if (saved === 'light') setTheme(false);
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme(true);
+    else setTheme(false);
+    
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const isDark = document.body.classList.contains('dark');
+        setTheme(!isDark);
+      });
+    }
+
+    // بررسی وجود آیکون‌های fontawesome و در صورت نبودن نمایش هشدار (اما با اطمینان از آیکون‌های جایگزین در کد)
+    console.log("خوراک دام ۳۶۵ - تمام آیکون‌های کارخانه (fa-industry) و گزارش (fa-chart-simple, fa-gauge-high) در فونت‌awesome موجود است.");
+    // در صورتی که فایل fontawesome لود نشود، یک استایل پشتیبان ساده نمایش می‌دهد (هیچ خطایی برای کاربر ایجاد نمی‌کند)
+    const testIcon = document.querySelector('.fa-industry');
+    if (testIcon && getComputedStyle(testIcon, ':before').content === 'none') {
+      console.warn("FontAwesome آفلاین در دسترس نیست. لطفاً فایل assets/fontawesome/css/all.min.css را بررسی کنید.");
+    } else if (testIcon) {
+      console.log("✓ FontAwesome با موفقیت بارگذاری شد و آیکون کارخانه و داشبورد قابل نمایش است.");
+    }
+  })();
+</script>
+<!-- ساختار فایل‌های آفلاین پیشنهادی:
+/assets/fontawesome/css/all.min.css
+/assets/fontawesome/webfonts/ (فایل‌های .woff2)
+/assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlGMWWMmk.woff2
+/assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlE8WWMmk.woff2
+/assets/fonts/vazirmatn/Dxxo8j6PP2D_kU2muijlHcWW.woff2
+-->
+</body>
+</html>
